@@ -14,6 +14,18 @@ class Bird {
     this.frameX = 0;
   }
 
+  reset() {
+    this.x = 150;
+    this.y = 200;
+    this.vy = 0;
+    this.originalWidth = 941;
+    this.originalHeight = 680;
+    this.width = this.originalWidth / 20;
+    this.height = this.originalHeight / 20;
+    this.weight = 1;
+    this.frameX = 0;
+  }
+
   update() {
     let curve = Math.sin(angle) * 15;
     if (this.y > canvas.height - this.height + curve) {

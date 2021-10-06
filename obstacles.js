@@ -1,4 +1,4 @@
-const obstaclesArray = [];
+let obstaclesArray = [];
 
 class Obstacle {
   constructor() {
@@ -23,6 +23,9 @@ class Obstacle {
       this.counted = true;
     }
     this.draw();
+  }
+  static reset() {
+    obstaclesArray = [];
   }
 }
 

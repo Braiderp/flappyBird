@@ -12,6 +12,7 @@ let frame = 0;
 let score = 0;
 
 let gamespeed = 2;
+let starting = true;
 
 const gradiant = ctx.createLinearGradient(0, 0, 0, 70);
 gradiant.addColorStop("0.4", "#fff");
@@ -43,7 +44,26 @@ function handleBackground() {
   ctx.drawImage(background, x, y, width, height);
   ctx.drawImage(background, x2, y, width, height);
 }
+function restart() {
+  angle = 0;
+  hue = 0;
+  frame = 0;
+  score = 0;
+  gamespeed = 2;
+  Obstacle.reset();
+  bird.reset();
+  animate();
+}
 
+function init() {
+  ctx.font = "20px Georgia";
+  ctx.fillStyle = "black";
+  ctx.fillText(
+    `Click space bar to flap. Click here to begin`,
+    160,
+    canvas.height / 2
+  );
+}
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   handleBackground();
@@ -62,8 +82,17 @@ function animate() {
   hue++;
   frame++;
 }
-animate();
+init();
 
+canvas.addEventListener("click", e => {
+  if (handleCollisions()) {
+    restart();
+  }
+  if (starting) {
+    starting = false;
+    animate();
+  }
+});
 window.addEventListener("keydown", e => {
   if (e.code === "Space") spacePressed = true;
 });
@@ -87,10 +116,10 @@ function handleCollisions() {
           bird.y + bird.height < canvas.height))
     ) {
       ctx.drawImage(bang, bird.x, bird.y, 50, 50);
-      ctx.font = "25px Georgia";
+      ctx.font = "20px Georgia";
       ctx.fillStyle = "white";
       ctx.fillText(
-        `Game over! your score is: ${score}`,
+        `Game over! your score is: ${score}. Click to restart.`,
         160,
         canvas.height / 2
       );
