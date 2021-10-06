@@ -28,7 +28,7 @@ class Obstacle {
 
 function handleObstacles() {
   if (frame % 150 === 0) {
-    // draw obsticle every 150 frames or every time frames is devisable by 50
+    // draw obsticle every 150 frames or every time frames is devisable by 150
     obstaclesArray.unshift(new Obstacle());
   }
   for (let i = 0; i < obstaclesArray.length; i++) {
