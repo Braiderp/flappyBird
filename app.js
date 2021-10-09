@@ -6,6 +6,9 @@ const app = express();
 
 require("dotenv").config();
 
+app.set("view engine", "ejs");
+app.set("views", "views");
+
 const port = process.env.PORT || 3000;
 
 const config = {
@@ -23,9 +26,11 @@ console.log("config", config);
 app.use(auth(config));
 
 // req.isAuthenticated is provided from the auth router
-// app.get("/", requiresAuth(), (req, res) => {
-//   res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
-// });
+app.get("/", requiresAuth(), (req, res) => {
+  res.render("/", {
+    path: "/"
+  });
+});
 
 app.get("/game", requiresAuth(), (req, res, next) => {
   const user = req.oidc.user;
