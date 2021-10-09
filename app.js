@@ -6,10 +6,9 @@ const app = express();
 
 require("dotenv").config();
 
-app.set("view engine", "ejs");
-app.set("views", "views");
-
 const port = process.env.PORT || 3000;
+
+const path = require("path");
 
 const config = {
   authRequired: false,
@@ -24,10 +23,14 @@ console.log("config", config);
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
+app.set("view engine", "ejs");
+app.set("views", "views");
+
+app.use(express.static(path.join(__dirname, "./public")));
 
 // req.isAuthenticated is provided from the auth router
 app.get("/", requiresAuth(), (req, res) => {
-  res.render("/", {
+  res.render("index", {
     path: "/"
   });
 });
