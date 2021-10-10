@@ -9,7 +9,8 @@ const {
   index,
   profile,
   myGameList,
-  deleteById
+  deleteById,
+  updateById
 } = require("../controllers/game");
 
 router.post("/save", requiresAuth(), save);
@@ -21,4 +22,7 @@ router.get("/profile", requiresAuth(), profile);
 router.get("/my-game-list", requiresAuth(), myGameList);
 
 router.post("/delete-by-id", requiresAuth(), deleteById);
+
+router.post("/update-by-id", requiresAuth(), updateById);
+
 module.exports = router;

@@ -1,8 +1,14 @@
 <table>
     <% for(var i=0; i < gameList.length; i++) { %>
         <tr>
-            <td><b>ID:</b> <%= gameList[i]._id %> </td> <td><b>Score:</b> <%= gameList[i].score %></td><td>
-                <td><form action="/delete-by-id" method="post">
+            <td><b>ID:</b> <%= gameList[i]._id %> </td> <td><b>Score:</b> 
+                <form action="/update-by-id" method="post">
+                <input name="score" type="number" value="<%= gameList[i].score %>">
+                <input type="hidden" name="id" value="<%= gameList[i].id %>">
+                <button type="submit">Cheat</button>
+            </td>
+            <td>
+                <form action="/delete-by-id" method="post">
                     <input type="hidden" name="id" value="<%= gameList[i].id %>">
                     <button type="submit">Delete</button>
                 </form>
