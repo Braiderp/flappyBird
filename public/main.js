@@ -64,7 +64,7 @@ function init() {
     canvas.height / 2
   );
 }
-function animate() {
+async function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   handleBackground();
   handleObstacles();
@@ -76,7 +76,10 @@ function animate() {
   ctx.strokeText(score, 450, 70);
   ctx.fillText(score, 450, 70);
   handleCollisions();
-  if (handleCollisions()) return;
+  if (handleCollisions()) {
+    postSave();
+    return;
+  }
   requestAnimationFrame(animate);
   angle += 0.12;
   hue++;

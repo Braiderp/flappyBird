@@ -1,14 +1,26 @@
 const express = require("express");
 
-const { auth, requiresAuth } = require("express-openid-connect");
+const { auth } = require("express-openid-connect");
 
 const app = express();
+
+const bodyParser = require("body-parser");
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(bodyParser.json());
+
+const mongoose = require("mongoose");
 
 require("dotenv").config();
 
 const port = process.env.PORT || 3000;
 
 const path = require("path");
+
+const gameRoutes = require("./routes/gameRoutes");
+
+const uri = `mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@web-development-2.cglha.mongodb.net/game`;
 
 const config = {
   authRequired: false,
@@ -19,27 +31,20 @@ const config = {
   secret: process.env.SECRET
 };
 
-console.log("config", config);
-
-// auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
 app.set("view engine", "ejs");
 app.set("views", "views");
 
 app.use(express.static(path.join(__dirname, "./public")));
 
-// req.isAuthenticated is provided from the auth router
-app.get("/", requiresAuth(), (req, res) => {
-  res.render("index", {
-    path: "/"
+app.use("/", gameRoutes);
+
+mongoose
+  .connect(uri)
+  .then(result => {
+    console.log("port", port);
+    app.listen(port);
+  })
+  .catch(err => {
+    console.log(err);
   });
-});
-
-app.get("/game", requiresAuth(), (req, res, next) => {
-  const user = req.oidc.user;
-  res.json(user);
-});
-
-app.listen(port, () => {
-  console.log(`listening on port: ${port}`);
-});
