@@ -8,3 +8,29 @@
   border: 2px solid black;
   margin-bottom: 20px;
 }
+body {
+  font-family: "Arial Narrow";
+}
+#navigationBar {
+  background: #444;
+  box-shadow: 0px 1px 10px 10px #ddd;
+  height: auto;
+  text-align: center;
+  width: 100%;
+}
+#navigationBar > ul > li {
+  display: inline;
+}
+#navigationBar > ul > li > a {
+  color: #fff;
+  display: inline-block;
+  height: 60px;
+  line-height: 60px;
+  margin: 0px;
+  padding: 0px 15px;
+  text-decoration: none;
+  transition: color 0.3s ease-in;
+}
+#navigationBar > ul > li > a:hover {
+  color: #fcd000;
+}

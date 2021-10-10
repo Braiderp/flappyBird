@@ -15,6 +15,7 @@ exports.save = async (req, res, next) => {
 
 exports.index = async (req, res) => {
   res.render("index", {
+    pageTitle: "home",
     path: "/"
   });
 };
@@ -26,7 +27,8 @@ exports.profile = async (req, res, next) => {
     path: "/profile",
     email,
     name,
-    picture: picture || ""
+    picture: picture || "",
+    pageTitle: "profile"
   });
 };
 
@@ -37,7 +39,8 @@ exports.myGameList = async (req, res, next) => {
   let list = gameList;
   res.render("my-game-list", {
     path: "/my-game-list",
-    gameList: list
+    gameList: list,
+    pageTitle: "my game list"
   });
 };
 
