@@ -1,10 +1,19 @@
+require("dotenv").config();
+
 const express = require("express");
 
 const { auth } = require("express-openid-connect");
 
 const app = express();
 
+const csurf = require("csurf");
+
 const bodyParser = require("body-parser");
+
+const session = require("express-session");
+
+
+const uri = `mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@web-development-2.cglha.mongodb.net/game`;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -12,15 +21,13 @@ app.use(bodyParser.json());
 
 const mongoose = require("mongoose");
 
-require("dotenv").config();
-
 const port = process.env.PORT || 3000;
+
 
 const path = require("path");
 
 const gameRoutes = require("./routes/gameRoutes");
 
-const uri = `mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@web-development-2.cglha.mongodb.net/game`;
 
 const config = {
   authRequired: false,
