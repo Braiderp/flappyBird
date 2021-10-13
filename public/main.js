@@ -1,3 +1,5 @@
+const fps = 60;
+
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
 
@@ -80,7 +82,10 @@ async function animate() {
     postSave();
     return;
   }
-  requestAnimationFrame(animate);
+  setTimeout(() => {
+    requestAnimationFrame(animate);
+  }, 1000 / fps);
+
   angle += 0.12;
   hue++;
   frame++;
