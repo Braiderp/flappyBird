@@ -5,12 +5,11 @@ const express = require("express");
 const { auth } = require("express-openid-connect");
 
 const app = express();
-
-const bodyParser = require('body-parser'); // CSRF Body parsing
+const bodyParser = require("body-parser"); // CSRF Body parsing
 
 const session = require("express-session");
 
-const cookieParser = require('cookie-parser'); // CSRF Cookie parsing
+const cookieParser = require("cookie-parser"); // CSRF Cookie parsing
 
 const uri = `mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@web-development-2.cglha.mongodb.net/game`;
 
@@ -22,14 +21,13 @@ const mongoose = require("mongoose");
 
 const port = process.env.PORT || 3000;
 
-var csrf = require('csurf');
+const csurf = require("csurf");
 
-var cors = require('cors');
+const cors = require("cors");
 
 const path = require("path");
 
 const gameRoutes = require("./routes/gameRoutes");
-
 
 const config = {
   authRequired: false,
@@ -40,23 +38,24 @@ const config = {
   secret: process.env.SECRET
 };
 
-
 app.use(
   session({
-    secret: process.env.SECRET
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false
   })
 );
 
-
 app.use(cookieParser());
 
-var csrfProtection = csrf({ cookie: true })
+// const csrfProtection = csurf();
 
 app.use(cors());
+// app.use(csrfProtection);
 
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.loggedIn;
-  res.locals.csrfToken = req.csrfToken;
+  // res.locals.csrfToken = req.csrfToken();
   next();
 });
 
