@@ -13,6 +13,7 @@
             <td>
                 <form action="/delete-by-id" method="post">
                     <input type="hidden" name="id" value="<%= gameList[i].id %>">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>"> 
                     <button type="submit">Delete</button>
                 </form>
                 </td>

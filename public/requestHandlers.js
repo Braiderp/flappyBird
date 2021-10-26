@@ -4,9 +4,9 @@ async function postSave() {
       score
     };
     return await fetch("/save", {
-      method: "post",
+      method: "POST",
       headers: {
-        Accept: "application/json, text/plain, */*",
+        "Accept": "application/json, text/plain, */*",
         "Content-Type": "application/json"
       },
       body: JSON.stringify(data)

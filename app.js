@@ -6,12 +6,11 @@ const { auth } = require("express-openid-connect");
 
 const app = express();
 
-const csurf = require("csurf");
-
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser'); // CSRF Body parsing
 
 const session = require("express-session");
 
+const cookieParser = require('cookie-parser'); // CSRF Cookie parsing
 
 const uri = `mongodb+srv://${process.env.DATABASE_USER}:${process.env.DATABASE_PASSWORD}@web-development-2.cglha.mongodb.net/game`;
 
@@ -23,6 +22,9 @@ const mongoose = require("mongoose");
 
 const port = process.env.PORT || 3000;
 
+var csrf = require('csurf');
+
+var cors = require('cors');
 
 const path = require("path");
 
@@ -37,6 +39,26 @@ const config = {
   issuerBaseURL: process.env.ISSUER_BASE_URL,
   secret: process.env.SECRET
 };
+
+
+app.use(
+  session({
+    secret: process.env.SECRET
+  })
+);
+
+
+app.use(cookieParser());
+
+var csrfProtection = csrf({ cookie: true })
+
+app.use(cors());
+
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.loggedIn;
+  res.locals.csrfToken = req.csrfToken;
+  next();
+});
 
 app.use(auth(config));
 app.set("view engine", "ejs");
