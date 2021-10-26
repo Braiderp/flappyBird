@@ -19,6 +19,8 @@ app.use(bodyParser.json());
 
 const mongoose = require("mongoose");
 
+const MongoDBStore = require("connect-mongodb-session")(session);
+
 const port = process.env.PORT || 3000;
 
 const csurf = require("csurf");
@@ -37,12 +39,16 @@ const config = {
   issuerBaseURL: process.env.ISSUER_BASE_URL,
   secret: process.env.SECRET
 };
-
+const store = MongoDBStore({
+  uri,
+  collection: "sessions"
+});
 app.use(
   session({
     secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store
   })
 );
 
