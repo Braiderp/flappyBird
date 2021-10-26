@@ -3,8 +3,9 @@ async function postSave() {
     const data = {
       score
     };
+    console.log("data", data);
     return await fetch("/save", {
-      method: "post",
+      method: "POST",
       headers: {
         Accept: "application/json, text/plain, */*",
         "Content-Type": "application/json"

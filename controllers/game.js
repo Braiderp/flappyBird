@@ -3,7 +3,6 @@ const { Schema } = require("mongoose");
 
 exports.save = async (req, res, next) => {
   try {
-    console.log("req", req.body);
     const { score } = req.body;
     const { email } = req.oidc.user;
     const game = await Game.create({ email, score });
